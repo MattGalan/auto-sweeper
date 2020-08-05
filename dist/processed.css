@@ -1,0 +1,10 @@
+body {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.panel {
+  flex: 1;
+}
+
+/*# sourceMappingURL=processed.css.map */

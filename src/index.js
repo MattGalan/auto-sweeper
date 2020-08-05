@@ -1,16 +1,17 @@
 import * as PIXI from 'pixi.js'
 import Cell from './Cell';
+import {resetScore} from './Score';
 
 //Create a Pixi Application
 let app = new PIXI.Application({
-    width: 1024,
+    width: 384,
     height: 1024,
     antialias: true,
-    transparent: true
+    backgroundColor: 0xeeeeee
 });
 
 //Add the canvas that Pixi automatically created for you to the HTML document
-document.body.appendChild(app.view);
+document.getElementById("game").appendChild(app.view);
 
 const container = new PIXI.Container();
 app.stage.addChild(container);
@@ -38,6 +39,12 @@ for (let x = 0; x < 10; x++) {
     }
 }
 
+for (let row = 0; row < 4; row++) {
+    for (let col = 0; col < 10; col++) {
+        cells[row][col].reveal();
+    }
+}
+
 container.y = 352;
 
 function generateRow() {
@@ -58,6 +65,8 @@ function generateRow() {
 }
 
 let distSinceRow = 0;
+
+resetScore();
 
 app.ticker.add(deltaTime => {
     const deltaDist = deltaTime * .3;

@@ -1,7 +1,8 @@
 import * as PIXI from 'pixi.js'
+import {increaseScore} from './Score';
 
 export default class Cell {
-    constructor(row, col, map) {
+    constructor(row, col, map, ) {
         this.rol = row;
         this.col = col;
         this.map = map;
@@ -43,6 +44,7 @@ export default class Cell {
             }
         }
 
+        this.bombCount = bombCount;
         this.text.text = bombCount || "";
     }
 
@@ -51,6 +53,7 @@ export default class Cell {
             return;
         }
 
+        increaseScore(this.bombCount);
         this.revealed = true;
         this.render();
 
