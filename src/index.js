@@ -7,7 +7,7 @@ let app = new PIXI.Application({
     width: 384,
     height: 1024,
     antialias: true,
-    backgroundColor: 0xeeeeee
+    transparent: true
 });
 
 //Add the canvas that Pixi automatically created for you to the HTML document

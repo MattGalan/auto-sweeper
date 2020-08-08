@@ -1,8 +1,41 @@
+@import './reset.scss';
+
 body {
     display: flex;
     flex-flow: row nowrap;
+    font-family: 'Montserrat';
+    font-size: 24px;
+    color: #e7e7e7;
+    background: #19171f;
 }
 
 .panel {
     flex: 1;
+}
+
+#score-panel {
+    font-size: 1.5em;
+    padding: 1em;
+    font-weight: 700;
+    margin-top: 30vh;
+    width: min-content;
+    position: relative;
+
+    &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        right: -1em;
+        bottom: 0;
+        left: -1em;
+        transform: skew(-15deg);
+        z-index: -1;
+        border-radius: 16px;
+        border: solid 5px #76ee86;
+    }
+
+    #score {
+        font-weight: 400;
+    }
 }
