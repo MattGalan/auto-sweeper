@@ -46,6 +46,17 @@ export default class Cell {
         this.container.addChild(this.text);
     }
 
+    iterateOverNeighbors(fn) {
+        for (let xDelta = -1; xDelta <= 1; xDelta++) {
+            for (let yDelta = -1; yDelta <= 1; yDelta++) {
+                const row = this.map[this.rol + xDelta];
+                const neighbor = row && row[this.col + yDelta];
+
+                neighbor && fn(neighbor);
+            }
+        }
+    }
+
     countNeighborBombs() {
         if (this.isBomb) {
             return;
@@ -53,48 +64,56 @@ export default class Cell {
         
         let bombCount = 0;
 
-        for (let xDelta = -1; xDelta <= 1; xDelta++) {
-            for (let yDelta = -1; yDelta <= 1; yDelta++) {
-                const row = this.map[this.rol + xDelta];
-                const neighbor = row && row[this.col + yDelta];
-
-                if (neighbor && neighbor.isBomb) {
-                    bombCount++;
-                }
+        this.iterateOverNeighbors(neighbor => {
+            if (neighbor && neighbor.isBomb) {
+                bombCount++;
             }
-        }
+        })
 
         this.bombCount = bombCount;
         this.text.text = bombCount || "";
         this.text.style.fill = numberColors[bombCount];
     }
 
-    reveal() {
-        if (this.revealed || this.isBomb || this.isMarked) {
+    softReveal() {
+        // Soft reveal does nothing if it's a bomb
+        if (this.isBomb) {
+            return;
+        }
+
+        // Don't reveal if already revealed or marked
+        if (this.isRevealed || this.isMarked) {
             return;
         }
 
         increaseScore(this.bombCount);
-        this.revealed = true;
+        this.isRevealed = true;
         this.render();
 
+        // If we're an unrevealed 0, reveal our neighbors
         if (this.text.text === "") {
             for (let xDelta = -1; xDelta <= 1; xDelta++) {
-                for (let yDelta = -1; yDelta <= 1; yDelta++) {
-                    const row = this.map[this.rol + xDelta];
-                    const neighbor = row && row[this.col + yDelta];
-                    neighbor && neighbor.reveal();
-                }
+                this.iterateOverNeighbors(neighbor => neighbor.softReveal());
             }
         }
     }
 
+    hardReveal() {
+        // Don't reveal if already revealed or marked
+        if (this.isRevealed || this.isMarked) {
+            return;
+        }
+
+        // Hard reveal kills you if it's a bomb
+        if (this.isBomb) {
+            console.log("BOOM!");
+            return;
+        }
+
+        this.softReveal();
+    }
+
     onMouseEnter() {
-        // this.graphics.clear();
-        // this.graphics.lineStyle(2, 0xcc0000);
-        // this.graphics.beginFill(0xcc9999, 1);
-        // this.graphics.drawRoundedRect(0, 0, this.size, this.size, 4);
-        // this.graphics.endFill();
         this.hovered = true;
         this.render();
     }
@@ -105,11 +124,24 @@ export default class Cell {
     }
 
     onMouseDown() {
-        this.reveal();
+        if (this.isRevealed) {
+            let markedNeighbors = 0;
+            this.iterateOverNeighbors(neighbor => {
+                if (neighbor.isMarked) {
+                    markedNeighbors++;
+                }
+            });
+
+            if (markedNeighbors === this.bombCount) {
+                this.iterateOverNeighbors(neighbor => neighbor.hardReveal());
+            }
+        } else {
+            this.hardReveal();
+        }
     }
 
     onRightMouseDown() {
-        if (this.revealed) {
+        if (this.isRevealed) {
             return;
         }
 
@@ -135,11 +167,11 @@ export default class Cell {
             opacity = .75;
         }
 
-        if (this.revealed) {
+        if (this.isRevealed) {
             opacity = .1;
         }
 
-        if (this.revealed || this.isMarked) {
+        if (this.isRevealed || this.isMarked) {
             this.text.visible = true;
         }
 

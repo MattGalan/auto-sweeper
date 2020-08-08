@@ -39,9 +39,10 @@ for (let x = 0; x < 10; x++) {
     }
 }
 
+// Reveal the first four rows
 for (let row = 0; row < 4; row++) {
     for (let col = 0; col < 10; col++) {
-        cells[row][col].reveal();
+        cells[row][col].softReveal();
     }
 }
 
@@ -64,7 +65,7 @@ function generateRow() {
     }
 }
 
-let distSinceRow = 0;
+let distSinceRow = 32 * 1.2;
 
 resetScore();
 
