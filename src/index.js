@@ -65,7 +65,17 @@ function generateRow() {
     }
 }
 
-let distSinceRow = 32 * 1.2;
+const rowHeight = 32 * 1.2;
+let distSinceRow = rowHeight;
+let deathRow = -11;
+
+// Draw red line
+const line = new PIXI.Graphics();
+line.lineStyle(4, 0xff6f52, 1);
+line.lineTo(384, 0);
+line.y = 775;
+
+app.stage.addChild(line);
 
 resetScore();
 
@@ -74,8 +84,12 @@ app.ticker.add(deltaTime => {
     container.y += deltaDist;
     distSinceRow += deltaDist;
 
-    if (distSinceRow > 32 * 1.2) {
+    if (distSinceRow > rowHeight) {
         generateRow();
-        distSinceRow = 0;
+
+        cells[deathRow] && cells[deathRow].forEach(cell => cell.kill());
+        deathRow++;
+
+        distSinceRow -= rowHeight;
     }
 });

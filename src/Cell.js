@@ -113,6 +113,11 @@ export default class Cell {
         this.softReveal();
     }
 
+    kill() {
+        this.isKilled = true;
+        this.render();
+    }
+
     onMouseEnter() {
         this.hovered = true;
         this.render();
@@ -176,6 +181,10 @@ export default class Cell {
         }
 
         if (this.isMarked) {
+            color = 0xff6f52;
+        }
+
+        if (this.isKilled) {
             color = 0xff6f52;
         }
 
