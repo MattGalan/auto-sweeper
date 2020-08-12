@@ -114,7 +114,15 @@ export default class Cell {
     }
 
     kill() {
-        this.isKilled = true;
+        if (this.isBomb) {
+            if (this.isMarked) {
+                // A marked bomb hit the line
+                this.isCleared = true;
+            } else {
+                // An unmarked bomb hit the line!
+                alert("YOU DIED!");
+            }
+        }
         this.render();
     }
 
@@ -184,8 +192,9 @@ export default class Cell {
             color = 0xff6f52;
         }
 
-        if (this.isKilled) {
-            color = 0xff6f52;
+        if (this.isCleared) {
+            color = 0x76ee86;
+            this.text.style.fill = 0x2bff48;
         }
 
         this.graphics.clear();
