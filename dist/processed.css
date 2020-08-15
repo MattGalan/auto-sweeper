@@ -63,31 +63,44 @@ body {
 
 .panel {
   flex: 1;
+  display: flex;
+  flex-flow: column nowrap;
+  padding-top: 64px;
+}
+.panel:first-child {
+  align-items: flex-end;
 }
 
-#score-panel {
-  font-size: 1.5em;
-  padding: 1em;
-  font-weight: 700;
-  margin-top: 30vh;
+#game {
+  background: #19171f;
+  padding-left: 6.4px;
+}
+
+.info-panel {
+  font-size: 1em;
+  padding: 1em 1em 1em 2em;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-end;
   width: min-content;
   position: relative;
 }
-#score-panel:before {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  right: -1em;
-  bottom: 0;
-  left: -1em;
-  transform: skew(-15deg);
-  z-index: -1;
-  border-radius: 16px;
-  border: solid 5px #76ee86;
+.info-panel h1 {
+  margin: 0 -6px 8px 0;
 }
-#score-panel #score {
-  font-weight: 400;
+.info-panel #time {
+  display: flex;
+}
+.info-panel #time .decimal {
+  margin: 0 -5px 0 11px;
+  font-size: 2em;
+  font-weight: 700;
+}
+.info-panel .number {
+  font-size: 2em;
+  font-weight: 700;
+  text-transform: full-width;
+  letter-spacing: -18px;
 }
 
 /*# sourceMappingURL=processed.css.map */

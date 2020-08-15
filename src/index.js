@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 import Cell from './Cell';
-import {resetScore} from './Score';
+import {resetScore, startClock, updateTime} from './Score';
 
 //Create a Pixi Application
 let app = new PIXI.Application({
@@ -78,8 +78,10 @@ line.y = 775;
 app.stage.addChild(line);
 
 resetScore();
+startClock();
 
 app.ticker.add(deltaTime => {
+    // const deltaDist = 0;
     const deltaDist = deltaTime * .3;
     container.y += deltaDist;
     distSinceRow += deltaDist;
@@ -92,4 +94,6 @@ app.ticker.add(deltaTime => {
 
         distSinceRow -= rowHeight;
     }
+
+    updateTime();
 });

@@ -52,7 +52,7 @@ export default class Cell {
         this.circle = new PIXI.Graphics();
         this.circle.x = 16;
         this.circle.y = 16;
-        this.circle.beginFill(0x2bff48, 1);
+        this.circle.beginFill(0xffffff, 1);
         this.circle.drawCircle(0, 0, 16);
         this.circle.endFill();
         this.circle.visible = false;
@@ -150,7 +150,8 @@ export default class Cell {
                 // A marked bomb hit the line
                 this.isCleared = true;
 
-                this.circle.visible =
+                this.circle.tint = 0x2bff48;
+                this.circle.visible = true;
                 anime({
                     duration: 500,
                     easing: 'easeOutCubic',
@@ -216,6 +217,19 @@ export default class Cell {
             this.text.style.fill = 0xff6f52;
             this.isMarked = true;
         }
+
+        this.circle.tint = 0xff6f52;
+        this.circle.visible = true;
+        anime({
+            duration: 250,
+            easing: 'easeOutCubic',
+            update: ({progress}) => {
+                const s = lerp(1, 2, progress / 100);
+                this.circle.scale.x = s;
+                this.circle.scale.y = s;
+                this.circle.alpha = lerp(1, 0, progress / 100);
+            }
+        });
         
         this.render();
     }

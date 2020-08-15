@@ -4,17 +4,28 @@
 <head>
     <title>Auto-Sweeper</title>
     <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="processed.css">
 </head>
 
 <body>
     <div class="panel">
-        <div id="score-panel">
-            <h1>SCORE</h1>
-            <div id="score"></div>
+        <div class="info-panel">
+            <h1>TIME</h1>
+            <div id="time">
+                <span id="minutes" class="number"></span>
+                <span class="decimal">:</span>
+                <span id="seconds" class="number"></span>
+                <span class="decimal">.</span>
+                <span id="decis" class="number"></span>
+            </div>
         </div>
-        
+
+        <div class="info-panel">
+            <h1>SCORE</h1>
+            <div id="score" class="number"></div>
+        </div>
+
     </div>
     <div id="game"></div>
     <div class="panel">
