@@ -1,5 +1,7 @@
 import * as PIXI from 'pixi.js'
+import anime from 'animejs';
 import {increaseScore} from './Score';
+import lerp from 'lerp';
 
 const numberColors = [
     0xffffff, // 0 - white
@@ -39,11 +41,20 @@ export default class Cell {
         this.text.x = 8;
         this.text.y = 1;
 
+        this.circle = new PIXI.Graphics();
+        this.circle.x = 16;
+        this.circle.y = 16;
+        this.circle.beginFill(0x2bff48, 1);
+        this.circle.drawCircle(0, 0, 16);
+        this.circle.endFill();
+        this.circle.visible = false;
+
         this.container = new PIXI.Container();
         this.container.x = this.size * col * 1.2;
         this.container.y = -this.size * row * 1.2;
         this.container.addChild(this.graphics);
         this.container.addChild(this.text);
+        this.container.addChild(this.circle);
     }
 
     iterateOverNeighbors(fn) {
@@ -118,9 +129,26 @@ export default class Cell {
             if (this.isMarked) {
                 // A marked bomb hit the line
                 this.isCleared = true;
+
+                this.circle.visible =
+                anime({
+                    duration: 500,
+                    easing: 'easeOutCubic',
+                    update: ({progress}) => {
+                        const s = lerp(1, 2, progress / 100);
+                        this.circle.scale.x = s;
+                        this.circle.scale.y = s;
+                        this.circle.alpha = lerp(1, 0, progress / 100);
+                    }
+                });
             } else {
                 // An unmarked bomb hit the line!
-                alert("YOU DIED!");
+                alert("You let an unmarked bomb cross the line!");
+            }
+        } else {
+            if (this.isMarked) {
+                // You marked a regular cell as a bomb!
+                alert("You marked a regular cell as a bomb!");
             }
         }
         this.render();
