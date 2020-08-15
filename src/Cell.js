@@ -13,7 +13,14 @@ const numberColors = [
     0x53e0c2, // 6 - teal
     0x8f8f8f, // 7 - black
     0xd4d4d4  // 8 - gray
-]
+];
+
+const alphas = {
+    normal: .5,
+    hovered: .75,
+    preReveal: .2,
+    revealed: .1
+}
 
 export default class Cell {
     constructor(row, col, map, ) {
@@ -25,6 +32,7 @@ export default class Cell {
 
         this.graphics = new PIXI.Graphics();
         this.graphics.interactive = true;
+        this.graphics.alpha = .5;
         this.graphics.mouseover = this.onMouseEnter.bind(this);
         this.graphics.mouseout = this.onMouseExit.bind(this);
         this.graphics.mousedown = this.onMouseDown.bind(this);
@@ -86,7 +94,7 @@ export default class Cell {
         this.text.style.fill = numberColors[bombCount];
     }
 
-    softReveal() {
+    softReveal(delay = 0) {
         // Soft reveal does nothing if it's a bomb
         if (this.isBomb) {
             return;
@@ -97,14 +105,26 @@ export default class Cell {
             return;
         }
 
-        increaseScore(this.bombCount);
+        
         this.isRevealed = true;
+
+        this.graphics.alpha = alphas.preReveal;
+        setTimeout(() => {
+            increaseScore(this.bombCount);
+            anime({
+                duration: 250,
+                update: ({progress}) =>
+                    this.graphics.alpha = lerp(alphas.preReveal, alphas.revealed, progress / 100)
+            });
+        }, delay);
+
+
         this.render();
 
         // If we're an unrevealed 0, reveal our neighbors
         if (this.text.text === "") {
             for (let xDelta = -1; xDelta <= 1; xDelta++) {
-                this.iterateOverNeighbors(neighbor => neighbor.softReveal());
+                this.iterateOverNeighbors(neighbor => neighbor.softReveal(delay + 50));
             }
         }
     }
@@ -155,11 +175,12 @@ export default class Cell {
     }
 
     onMouseEnter() {
-        this.hovered = true;
+        this.graphics.alpha = this.isRevealed ? alphas.revealed : alphas.hovered;
         this.render();
     }
 
     onMouseExit() {
+        this.graphics.alpha = this.isRevealed ? alphas.revealed : alphas.normal;
         this.hovered = false;
         this.render();
     }
@@ -200,17 +221,8 @@ export default class Cell {
     }
 
     render() {
-        let opacity = .5;
         let color = 0xffffff;
         this.text.visible = false;
-
-        if (this.hovered) {
-            opacity = .75;
-        }
-
-        if (this.isRevealed) {
-            opacity = .1;
-        }
 
         if (this.isRevealed || this.isMarked) {
             this.text.visible = true;
@@ -226,7 +238,7 @@ export default class Cell {
         }
 
         this.graphics.clear();
-        this.graphics.beginFill(color, opacity);
+        this.graphics.beginFill(color, 1);
         this.graphics.drawRoundedRect(0, 0, this.size, this.size, 4);
         this.graphics.endFill();
     }
