@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 import anime from 'animejs';
-import {increaseScore} from './Score';
+import {increaseScore, mineCleared} from './Score';
 import lerp from 'lerp';
 
 const numberColors = [
@@ -162,6 +162,8 @@ export default class Cell {
                         this.circle.alpha = lerp(1, 0, progress / 100);
                     }
                 });
+
+                mineCleared();
             } else {
                 // An unmarked bomb hit the line!
                 alert("You let an unmarked bomb cross the line!");
@@ -212,6 +214,7 @@ export default class Cell {
             this.text.text = "";
             this.isMarked = false;
         } else {
+            // Mark the bomb
             this.text.text = "•";
             this.text.x = 11;
             this.text.style.fill = 0xff6f52;

@@ -1,12 +1,15 @@
-let score = 0;
-const scoreDisp = document.getElementById("score");
-scoreDisp.textContent = score;
+import { speedUp } from ".";
 
+const scoreDisp = document.getElementById("score");
 const secondsDisp = document.getElementById("seconds");
 const deciDisp = document.getElementById("decis");
 const minutesDisp = document.getElementById("minutes");
 const colon = document.getElementsByClassName("decimal")[0];
+const clearedDisp = document.getElementById("cleared");
+
+let score = 0;
 let timerStart = 0;
+let bombsCleared = 0;
 
 function renderScore() {
     scoreDisp.textContent = score;
@@ -33,4 +36,9 @@ export function updateTime() {
     const minutes = Math.floor(elapsedTime / 60000);
     colon.style.display = minutes >= 1 ? "inline" : "none";
     minutesDisp.textContent = minutes >= 1 ? minutes : "";
+}
+
+export function mineCleared() {
+    bombsCleared++;
+    clearedDisp.textContent = bombsCleared;
 }

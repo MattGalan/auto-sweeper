@@ -86,7 +86,7 @@ body {
   position: relative;
 }
 .info-panel h1 {
-  margin: 0 -6px 8px 0;
+  margin: 0 -6px 4px 0;
 }
 .info-panel #time {
   display: flex;
@@ -99,8 +99,24 @@ body {
 .info-panel .number {
   font-size: 2em;
   font-weight: 700;
+}
+.info-panel .number.mono {
   text-transform: full-width;
   letter-spacing: -18px;
+}
+
+#dots {
+  display: flex;
+  flex-flow: row wrap;
+  width: 120px;
+  margin-right: 0.74em;
+}
+#dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #76ee86;
+  margin: 2px;
 }
 
 /*# sourceMappingURL=processed.css.map */
