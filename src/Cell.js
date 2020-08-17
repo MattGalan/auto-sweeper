@@ -137,7 +137,7 @@ export default class Cell {
 
         // Hard reveal kills you if it's a bomb
         if (this.isBomb) {
-            console.log("BOOM!");
+            gameOver("You stepped on a bomb!");
             return;
         }
 

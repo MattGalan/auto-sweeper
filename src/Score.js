@@ -41,6 +41,7 @@ export function startGame() {
     timerStart = Date.now();
 
     playing = true;
+    modals.classList.add("hidden");
 }
 
 export function increaseScore(points) {
@@ -74,7 +75,7 @@ export function gameOver(reason) {
     if (!playing) {
         return;
     }
-    
+
     playing = false;
     setText("game-over-reason", reason);
 
