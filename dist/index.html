@@ -9,32 +9,66 @@
 </head>
 
 <body>
-    <div class="panel">
-        <div class="info-panel">
-            <h1>TIME</h1>
-            <div id="time">
-                <span id="minutes" class="number mono"></span>
-                <span class="decimal">:</span>
-                <span id="seconds" class="number mono"></span>
-                <span class="decimal">.</span>
-                <span id="decis" class="number mono"></span>
+    <div id="main">
+        <div class="panel">
+            <div class="info-panel">
+                <h1>TIME</h1>
+                <div id="time">
+                    <span id="minutes" class="number mono"></span>
+                    <span class="decimal">:</span>
+                    <span id="seconds" class="number mono"></span>
+                    <span class="decimal">.</span>
+                    <span id="decis" class="number mono"></span>
+                </div>
+            </div>
+    
+            <div class="info-panel">
+                <h1>SCORE</h1>
+                <div id="score" class="number mono">0</div>
+            </div>
+    
+            <div class="info-panel">
+                <h1>CLEARED</h1>
+                <div id="cleared" class="number">0</div>
             </div>
         </div>
+    
+        <div id="game"></div>
+    
+        <div class="panel"></div>
+    </div>
 
-        <div class="info-panel">
-            <h1>SCORE</h1>
-            <div id="score" class="number mono">0</div>
-        </div>
-
-        <div class="info-panel">
-            <h1>CLEARED</h1>
-            <div id="cleared" class="number">0</div>
+    <div id="modals" class="hidden">
+        <div id="game-over">
+            <h1>GAME OVER!</h1>
+            <p id="game-over-reason">This is a sample game over reason.</p>
+            <div id="scores">
+                <div>
+                    <h2> </h2>
+                    <h2>Time</h2>
+                    <h2>Score</h2>
+                    <h2>Cleared</h2>
+                </div>
+                <div>
+                    <h2>Current</h2>
+                    <div id="current-time">-</div>
+                    <div id="current-score">-</div>
+                    <div id="current-cleared">-</div>
+                </div>
+                <div>
+                    <h2>Best</h2>
+                    <div id="best-time">-</div>
+                    <div id="best-score">-</div>
+                    <div id="best-cleared">-</div>
+                </div>
+            </div>
+            <div id="buttons">
+                <button class="secondary">Adjust Settings</button>
+                <button class="primary">PLAY AGAIN</button>
+            </div>
         </div>
     </div>
-    <div id="game"></div>
-    <div class="panel">
 
-    </div>
     <script src="main.js"></script>
 </body>
 

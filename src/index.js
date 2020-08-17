@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 import Cell from './Cell';
-import {resetScore, startClock, updateTime, mineCleared} from './Score';
+import {resetScore, startClock, updateTime, mineCleared, startGame} from './Score';
 
 //Create a Pixi Application
 let app = new PIXI.Application({
@@ -78,8 +78,7 @@ line.y = 775;
 
 app.stage.addChild(line);
 
-resetScore();
-startClock();
+startGame();
 
 let speed = .2;
 const acceleration = .00005;
@@ -87,6 +86,7 @@ const acceleration = .00005;
 app.ticker.add(deltaTime => {
     speed += acceleration * deltaTime;
     const deltaDist = deltaTime * speed;
+    // const deltaDist = deltaTime * 0;
 
     container.y += deltaDist;
     distSinceRow += deltaDist;

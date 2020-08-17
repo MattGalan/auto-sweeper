@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 import anime from 'animejs';
-import {increaseScore, mineCleared} from './Score';
+import {increaseScore, mineCleared, gameOver} from './Score';
 import lerp from 'lerp';
 
 const numberColors = [
@@ -165,13 +165,11 @@ export default class Cell {
 
                 mineCleared();
             } else {
-                // An unmarked bomb hit the line!
-                alert("You let an unmarked bomb cross the line!");
+                gameOver("An unmarked bomb crossed the line!");
             }
         } else {
             if (this.isMarked) {
-                // You marked a regular cell as a bomb!
-                alert("You marked a regular cell as a bomb!");
+                gameOver("You marked a regular cell as a bomb!");
             }
         }
         this.render();
