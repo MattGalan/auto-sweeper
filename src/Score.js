@@ -1,4 +1,5 @@
 import { speedUp } from ".";
+import Cookies from "js-cookie";
 
 const scoreDisp = document.getElementById("score");
 const secondsDisp = document.getElementById("seconds");
@@ -11,7 +12,7 @@ const modals = document.getElementById("modals");
 let playing = false;
 let score = 0;
 let timerStart = 0;
-let bombsCleared = 0;
+let cleared = 0;
 
 function renderScore() {
     scoreDisp.textContent = score;
@@ -32,6 +33,13 @@ function getSeconds(millis) {
 
 function getDecis(millis) {
     return Math.floor(millis / 100) % 10;
+}
+
+function getReadableTime(millis) {
+    if (millis === "-") {
+        return millis;
+    }
+    return `${getMinutes(millis)}:${getSeconds(millis)}.${getDecis(millis)}`;
 }
 
 export function startGame() {
@@ -67,8 +75,25 @@ export function updateTime() {
 }
 
 export function mineCleared() {
-    bombsCleared++;
-    clearedDisp.textContent = bombsCleared;
+    cleared++;
+    clearedDisp.textContent = cleared;
+}
+
+function getBest(name, current) {
+    const stored = Cookies.get(name);
+
+    // No PR found
+    if (!stored) {
+        Cookies.set(name, current, {expires: 365000});
+        return "-";
+    }
+
+    // Update cookie for a new PR
+    if (stored === "undefined" || current > stored) {
+        Cookies.set(name, current, {expires: 365000});
+    }
+
+    return stored;
 }
 
 export function gameOver(reason) {
@@ -77,11 +102,19 @@ export function gameOver(reason) {
     }
 
     playing = false;
-    setText("game-over-reason", reason);
-
+    
     const elapsedTime = Date.now() - timerStart;
-    setText("current-time", `${getMinutes(elapsedTime)}:${getSeconds(elapsedTime)}.${getDecis(elapsedTime)}`);
+    
+    const bestTime = getBest("time", elapsedTime);
+    const bestScore = getBest("score", score);
+    const bestCleared = getBest("cleared", cleared);
+    
+    setText("game-over-reason", reason);
+    setText("current-time", getReadableTime(elapsedTime));
     setText("current-score", score);
-    setText("current-cleared", bombsCleared);
+    setText("current-cleared", cleared);
+    setText("best-time", getReadableTime(bestTime));
+    setText("best-score", bestScore);
+    setText("best-cleared", bestCleared);
     modals.classList.remove("hidden");
 }

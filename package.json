@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "animejs": "^3.2.0",
+    "js-cookie": "^2.2.1",
     "lerp": "^1.0.3",
     "pixi.js": "^5.3.2",
     "webpack": "^4.44.1",
