@@ -32,8 +32,15 @@
         <div class="panel"></div>
     </div>
 
-    <div id="modals" class="hidden">
-        <div id="game-over">
+    <div id="modals">
+        <div id="start" class="modal">
+            <h1>Auto-Sweeper</h1>
+            <h2>A WIP game by Matt Galan</h2>
+            <div class="button-wrapper">
+                <button class="primary">PLAY</button>
+            </div>
+        </div>
+        <div id="game-over" class="modal">
             <h1>GAME OVER!</h1>
             <p id="game-over-reason">This is a sample game over reason.</p>
             <div id="scores">
@@ -56,7 +63,7 @@
                     <div id="best-cleared">-</div>
                 </div>
             </div>
-            <div id="buttons">
+            <div class="button-wrapper">
                 <button class="secondary">Adjust Settings</button>
                 <button id="retry-btn" class="primary">PLAY AGAIN</button>
             </div>

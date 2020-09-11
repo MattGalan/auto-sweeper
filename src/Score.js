@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 const scoreDisp = document.getElementById("score");
 const timeDisp = document.getElementById("time");
 const clearedDisp = document.getElementById("cleared");
-const modals = document.getElementById("modals");
+const gameOverModal = document.getElementById("game-over");
 
 let playing = false;
 let score = 0;
@@ -46,7 +46,7 @@ export function startGame() {
     timerStart = Date.now();
 
     playing = true;
-    modals.classList.add("hidden");
+    gameOverModal.classList.add("hidden");
 }
 
 export function increaseScore(points) {
@@ -109,5 +109,5 @@ export function gameOver(reason) {
     setText("best-time", getReadableTime(bestTime));
     setText("best-score", bestScore);
     setText("best-cleared", bestCleared);
-    modals.classList.remove("hidden");
+    gameOverModal.classList.remove("hidden");
 }
