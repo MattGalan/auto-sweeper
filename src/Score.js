@@ -2,10 +2,7 @@ import { speedUp } from ".";
 import Cookies from "js-cookie";
 
 const scoreDisp = document.getElementById("score");
-const secondsDisp = document.getElementById("seconds");
-const deciDisp = document.getElementById("decis");
-const minutesDisp = document.getElementById("minutes");
-const colon = document.getElementsByClassName("decimal")[0];
+const timeDisp = document.getElementById("time");
 const clearedDisp = document.getElementById("cleared");
 const modals = document.getElementById("modals");
 
@@ -67,11 +64,7 @@ export function updateTime() {
     }
 
     const elapsedTime = Date.now() - timerStart;
-    deciDisp.textContent = getDecis(elapsedTime);
-    secondsDisp.textContent = getSeconds(elapsedTime);
-    const minutes = getMinutes(elapsedTime);
-    colon.style.display = minutes >= 1 ? "inline" : "none";
-    minutesDisp.textContent = minutes >= 1 ? minutes : "";
+    timeDisp.textContent = getReadableTime(elapsedTime);
 }
 
 export function mineCleared() {

@@ -94,23 +94,11 @@ body {
   position: relative;
 }
 .info-panel h1 {
-  margin: 0 -6px 4px 0;
-}
-.info-panel #time {
-  display: flex;
-}
-.info-panel #time .decimal {
-  margin: 0 -5px 0 11px;
-  font-size: 2em;
-  font-weight: 700;
+  margin-bottom: 4px;
 }
 .info-panel .number {
   font-size: 2em;
   font-weight: 700;
-}
-.info-panel .number.mono {
-  text-transform: full-width;
-  letter-spacing: -18px;
 }
 
 #dots {

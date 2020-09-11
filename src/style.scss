@@ -46,27 +46,12 @@ body {
     position: relative;
 
     h1 {
-        margin: 0 -6px 4px 0;
-    }
-
-    #time {
-        display: flex;
-
-        .decimal {
-            margin: 0 -5px 0 11px;
-            font-size: 2em;
-            font-weight: 700;
-        }
+        margin-bottom: 4px;
     }
 
     .number {
         font-size: 2em;
         font-weight: 700;
-
-        &.mono {
-            text-transform: full-width;
-            letter-spacing: -18px;
-        }
     }
 }
 
