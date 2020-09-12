@@ -127,7 +127,7 @@ export function gameOver(reason) {
     setText("current-score", Math.floor(score));
     setText("current-cleared", cleared);
     setText("best-time", getReadableTime(bestTime));
-    setText("best-score", bestScore);
+    setText("best-score", Math.floor(bestScore));
     setText("best-cleared", bestCleared);
     mainElement.classList.add("blurry");
     modals.classList.remove("disabled");
