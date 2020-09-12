@@ -3,22 +3,23 @@
 $green: #76ee86;
 $red: #ff6f52;
 $white:  #e7e7e7;
+$navy: #19171f;
 
 body {
     font-family: 'Montserrat';
     font-size: 24px;
     color: $white;
-    background: #19171f;
+    background: $navy;
     position: relative;
-}
-
-.hidden {
-    display: none !important;
 }
 
 #main {
     display: flex;
     flex-flow: row nowrap;
+
+    &.blurry {
+        filter: blur(2px) opacity(25%);
+    }
 }
 
 .panel {
@@ -33,7 +34,7 @@ body {
 }
 
 #game {
-    background: #19171f;
+    background: $navy;
     padding-left: 6.4px;
 }
 
@@ -72,19 +73,30 @@ body {
 }
 
 #modals {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: stretch;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
     position: absolute;
     top: 0;
+    right: 0;
+    bottom: 0;
     left: 0;
+
+    &.disabled {
+        pointer-events: none;
+    }
 
     .modal {
         background: rgba($red, .25);
         padding: 32px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 35%;
+
+        &.hidden {
+            transform: scaleY(0);
+            opacity: 0;
+        }
+
+        transition: transform .5s, opacity .5s;
     }
 
     #start {
@@ -105,6 +117,11 @@ body {
     }
 
     #game-over {
+        section {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
         h1 {
             font-size: 2em;
             font-weight: 700;
@@ -171,6 +188,14 @@ body {
             }
     
             transition: box-shadow .25s, margin .25s;
-        }                
+        }
+
+        &.secondary {
+            &:hover {
+                background: rgba($red, .15);
+            }
+
+            transition: background .25;
+        }
     }
 }

@@ -60,13 +60,12 @@ body {
   position: relative;
 }
 
-.hidden {
-  display: none !important;
-}
-
 #main {
   display: flex;
   flex-flow: row nowrap;
+}
+#main.blurry {
+  filter: blur(2px) opacity(25%);
 }
 
 .panel {
@@ -116,19 +115,27 @@ body {
 }
 
 #modals {
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: stretch;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
   position: absolute;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
+}
+#modals.disabled {
+  pointer-events: none;
 }
 #modals .modal {
   background: rgba(255, 111, 82, 0.25);
   padding: 32px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 35%;
+  transition: transform 0.5s, opacity 0.5s;
+}
+#modals .modal.hidden {
+  transform: scaleY(0);
+  opacity: 0;
 }
 #modals #start {
   display: flex;
@@ -143,6 +150,10 @@ body {
 }
 #modals #start h2 {
   margin: 8px 0 32px 0;
+}
+#modals #game-over section {
+  max-width: 500px;
+  margin: 0 auto;
 }
 #modals #game-over h1 {
   font-size: 2em;
@@ -199,6 +210,12 @@ body {
 .button-wrapper button.primary:hover {
   box-shadow: none;
   margin: 0 0 0 20px;
+}
+.button-wrapper button.secondary {
+  transition: background 0.25;
+}
+.button-wrapper button.secondary:hover {
+  background: rgba(255, 111, 82, 0.15);
 }
 
 /*# sourceMappingURL=processed.css.map */

@@ -70,12 +70,16 @@ function init() {
     
     // Position the container at the top of the screen
     container.y = 352;
+}
 
+function newGame() {
+    init();
     startGame();
 }
 
-// Hook up the retry button
-document.getElementById("retry-btn").addEventListener("click", init);
+// Hook up the buttons
+document.getElementById("retry-btn").addEventListener("click", newGame);
+document.getElementById("quick-play-btn").addEventListener("click", newGame);
 
 init();
 

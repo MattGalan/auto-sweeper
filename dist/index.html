@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div id="main">
+    <div id="main" class="blurry">
         <div class="panel">
             <div class="info-panel">
                 <h1>TIME</h1>
@@ -37,36 +37,39 @@
             <h1>Auto-Sweeper</h1>
             <h2>A WIP game by Matt Galan</h2>
             <div class="button-wrapper">
-                <button class="primary">PLAY</button>
+                <button class="secondary">Custom game</button>
+                <button id="quick-play-btn" class="primary">QUICK PLAY</button>
             </div>
         </div>
-        <div id="game-over" class="modal">
-            <h1>GAME OVER!</h1>
-            <p id="game-over-reason">This is a sample game over reason.</p>
-            <div id="scores">
-                <div>
-                    <h2> </h2>
-                    <h2>Time</h2>
-                    <h2>Score</h2>
-                    <h2>Cleared</h2>
+        <div id="game-over" class="modal hidden">
+            <section>
+                <h1>GAME OVER!</h1>
+                <p id="game-over-reason">This is a sample game over reason.</p>
+                <div id="scores">
+                    <div>
+                        <h2> </h2>
+                        <h2>Time</h2>
+                        <h2>Score</h2>
+                        <h2>Cleared</h2>
+                    </div>
+                    <div>
+                        <h2>Current</h2>
+                        <div id="current-time">-</div>
+                        <div id="current-score">-</div>
+                        <div id="current-cleared">-</div>
+                    </div>
+                    <div>
+                        <h2>Best</h2>
+                        <div id="best-time">-</div>
+                        <div id="best-score">-</div>
+                        <div id="best-cleared">-</div>
+                    </div>
                 </div>
-                <div>
-                    <h2>Current</h2>
-                    <div id="current-time">-</div>
-                    <div id="current-score">-</div>
-                    <div id="current-cleared">-</div>
+                <div class="button-wrapper">
+                    <button class="secondary">Adjust Settings</button>
+                    <button id="retry-btn" class="primary">PLAY AGAIN</button>
                 </div>
-                <div>
-                    <h2>Best</h2>
-                    <div id="best-time">-</div>
-                    <div id="best-score">-</div>
-                    <div id="best-cleared">-</div>
-                </div>
-            </div>
-            <div class="button-wrapper">
-                <button class="secondary">Adjust Settings</button>
-                <button id="retry-btn" class="primary">PLAY AGAIN</button>
-            </div>
+            </section>
         </div>
     </div>
 

@@ -4,15 +4,32 @@ import Cookies from "js-cookie";
 const scoreDisp = document.getElementById("score");
 const timeDisp = document.getElementById("time");
 const clearedDisp = document.getElementById("cleared");
+const mainElement = document.getElementById("main");
+const modals = document.getElementById("modals");
+const startModal = document.getElementById("start");
 const gameOverModal = document.getElementById("game-over");
 
-let playing = false;
+const states = Object.freeze({
+    mainMenu: 1,
+    playing: 2,
+    gameOver: 3
+});
+
+let curState = states.mainMenu;
 let score = 0;
 let timerStart = 0;
 let cleared = 0;
 
 function renderScore() {
     scoreDisp.textContent = score;
+}
+
+function hideElement(el) {
+    el.classList.add("hidden");
+}
+
+function showElement(el) {
+    el.classList.remove("hidden");
 }
 
 // Don't use this for text that updates frequently.
@@ -45,12 +62,15 @@ export function startGame() {
 
     timerStart = Date.now();
 
-    playing = true;
-    gameOverModal.classList.add("hidden");
+    curState = states.playing;
+    modals.classList.add("disabled");
+    hideElement(startModal);
+    hideElement(gameOverModal);
+    mainElement.classList.remove("blurry");
 }
 
 export function increaseScore(points) {
-    if (!playing) {
+    if (curState !== states.playing) {
         return;
     }
 
@@ -59,7 +79,7 @@ export function increaseScore(points) {
 }
 
 export function updateTime() {
-    if (!playing) {
+    if (curState !== states.playing) {
         return;
     }
 
@@ -90,11 +110,11 @@ function getBest(name, current) {
 }
 
 export function gameOver(reason) {
-    if (!playing) {
+    if (curState !== states.playing) {
         return;
     }
 
-    playing = false;
+    curState = states.gameOver
     
     const elapsedTime = Date.now() - timerStart;
     
@@ -109,5 +129,7 @@ export function gameOver(reason) {
     setText("best-time", getReadableTime(bestTime));
     setText("best-score", bestScore);
     setText("best-cleared", bestCleared);
-    gameOverModal.classList.remove("hidden");
+    mainElement.classList.add("blurry");
+    modals.classList.remove("disabled");
+    showElement(gameOverModal);
 }
