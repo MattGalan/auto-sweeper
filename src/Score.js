@@ -21,7 +21,7 @@ let timerStart = 0;
 let cleared = 0;
 
 function renderScore() {
-    scoreDisp.textContent = score;
+    scoreDisp.textContent = Math.floor(score);
 }
 
 function hideElement(el) {
@@ -119,12 +119,12 @@ export function gameOver(reason) {
     const elapsedTime = Date.now() - timerStart;
     
     const bestTime = getBest("time", elapsedTime);
-    const bestScore = getBest("score", score);
+    const bestScore = getBest("score", Math.floor(score));
     const bestCleared = getBest("cleared", cleared);
     
     setText("game-over-reason", reason);
     setText("current-time", getReadableTime(elapsedTime));
-    setText("current-score", score);
+    setText("current-score", Math.floor(score));
     setText("current-cleared", cleared);
     setText("best-time", getReadableTime(bestTime));
     setText("best-score", bestScore);

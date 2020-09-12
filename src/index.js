@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 import Cell from './Cell';
-import {updateTime, startGame} from './Score';
+import {updateTime, startGame, increaseScore} from './Score';
 
 // Initialize Pixi
 let app = new PIXI.Application({
@@ -21,6 +21,25 @@ document.oncontextmenu = function(event) {
 // Game constants
 const rowHeight = 32 * 1.2;
 const acceleration = .00005;
+const sprintScoreGain = 1;
+
+const runModes = Object.freeze({
+    normal: 1,
+    sprinting: 8,
+    bulletTime: .5
+});
+let curRunMode = runModes.normal;
+
+document.addEventListener("keydown", e => {
+    if (e.key === "Shift") {
+        curRunMode = runModes.sprinting;
+    }
+});
+document.addEventListener("keyup", e => {
+    if (e.key === "Shift") {
+        curRunMode = runModes.normal;
+    }
+});
 
 // These are set in init()
 let cells, distSinceRow, deathRow, speed;
@@ -93,11 +112,16 @@ app.stage.addChild(line);
 
 app.ticker.add(deltaTime => {
     speed += acceleration * deltaTime;
-    const deltaDist = deltaTime * speed;
+    const deltaDist = deltaTime * speed * curRunMode;
     // const deltaDist = deltaTime * 0;
 
     container.y += deltaDist;
     distSinceRow += deltaDist;
+
+    // Increase score for sprinting
+    if (curRunMode === runModes.sprinting) {
+        increaseScore(sprintScoreGain * deltaTime);
+    }
 
     if (distSinceRow > rowHeight) {
         generateRow();
